@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+          - id: hotel-service-rooms
+            uri: http://${HOTEL_SERVICE_URL:localhost}:8081
+            predicates:
+              - Path=/api/rooms/**
+          - id: hotel-service-hotels
+            uri: http://${HOTEL_SERVICE_URL:localhost}:8081
+            predicates:
+              - Path=/api/hotels/**
+          - id: reservation-service
+            uri: http://${RESERVATION_SERVICE_URL:localhost}:8082
+            predicates:
+              - Path=/api/reservations/**
+          - id: notification-service
+            uri: http://${NOTIFICATION_SERVICE_URL:localhost}:8083
+            predicates:
+              - Path=/api/notifications/**
+jwt:
+  secret: "a-string-secret-at-least-256-bits-long"
